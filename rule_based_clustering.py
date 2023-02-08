@@ -9,12 +9,11 @@ import matplotlib.pyplot as plt
 cluster_dict_label = {"KURTARMA": [{}], "YEMEK-SU": [{}], "SES": [{}], "GIYSI": [{}]}
 kurtarma_keywords = ["enkaz", "enkaz altinda ses", "yardim", "altinda", "enkaz", "gocuk", "bina", "YARDIM", "acil", 
                     "kat", "ACIL", "altindalar", "enkazaltindayim", "yardim", "alinamiyor", "Enkaz", "yardimci", "ENKAZ", 
-                    "saatlerdir", "destek", "altinda", "enkazda", "kurtarma", "kurtarma calismasi", "kurtarma talebi", "ulasilamayan kisiler"]
-ses_keywords = ["ses"]
+                    "saatlerdir", "destek", "altinda", "enkazda", "kurtarma", "kurtarma calismasi", "kurtarma talebi", "ulasilamayan kisiler", "ses"]
 yemek_su_keywords = ["gida talebi", "gida", "yemek", "su", "corba"]
 giysi_keywords = ["giysi talebi", "giysi", "battaniye", "yagmurluk", "kazak", "corap", "soguk"]
-keywords = kurtarma_keywords + ses_keywords + yemek_su_keywords + giysi_keywords
-labels = ["KURTARMA", "YEMEK-SU", "SES", "GIYSI"]
+keywords = kurtarma_keywords + yemek_su_keywords + giysi_keywords
+labels = ["KURTARMA", "YEMEK-SU", "GIYSI"]
 # labels = [{"KURTARMA": kurtarma_keywords}, {"YEMEK-SU", yemek_su_keywords}, {"SES": ses_keywords}, {"GIYSI": giysi_keywords}]
 # pattern = f"(^|\W){keywords}($|\W)"
 plot_data = {"key": labels, "count": [0 for i in range(len(labels))]}
@@ -33,8 +32,6 @@ def check_regex_return_keyword(full_text):
                 label_list.append("KURTARMA")
             elif keyword in yemek_su_keywords:
                 label_list.append("YEMEK-SU")
-            elif keyword in ses_keywords:
-                label_list.append("SES")
             elif keyword in giysi_keywords:
                 label_list.append("GIYSI")
     if len(label_list) > 0:
