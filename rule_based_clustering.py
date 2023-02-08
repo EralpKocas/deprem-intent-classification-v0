@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 # set:
 #  key: geo_loc
 #  value: cluster_label: {enkaz: tweet_sayisi, tweet_id, created_at}, (yemek, tweet_sayisi, tweet_id, created_at), (barinma, tweet_sayisi, tweet_id, created_at), (ses, tweet_sayisi, tweet_id, created_at)
-cluster_dict_label = {"KURTARMA": [{}], "YEMEK-SU": [{}], "SES": [{}], "GIYSI": [{}]}
+cluster_dict_label = {"KURTARMA": [{}], "YEMEK-SU": [{}], "GIYSI": [{}]}
 kurtarma_keywords = ["enkaz", "enkaz altinda ses", "yardim", "altinda", "enkaz", "gocuk", "bina", "YARDIM", "acil", 
                     "kat", "ACIL", "altindalar", "enkazaltindayim", "yardim", "alinamiyor", "Enkaz", "yardimci", "ENKAZ", 
                     "saatlerdir", "destek", "altinda", "enkazda", "kurtarma", "kurtarma calismasi", "kurtarma talebi", "ulasilamayan kisiler", "ses"]
@@ -59,14 +59,14 @@ def remove_diacritics(text):
 
 def process_tweet(tweet):
     # normalize text to english characters
-    tweet_normalized = remove_diacritics(tweet["full_text"])
+    tweet_normalized = remove_diacritics(tweet[1]) # tweet[1] -> full_text
     # check if tweet contains any of the keywords
     labels, is_match = check_regex_return_keyword(tweet_normalized)
     if is_match:
         update_plot_data(labels)
         # TODO check: db format'a uygun mu? Halihazirda gelen bir dataya sadece label eklenecek ise guncellenmesi lazim.
-        db_format = {"label": labels, "geo_loc": tweet["geo_loc"], "tweet_id": tweet['tweet_id'], "created_at": tweet['created_at'], "full_text": tweet['full_text']}
-        return db_format
+        # db_format = {"label": labels, "geo_loc": tweet["geo_loc"], "tweet_id": tweet['tweet_id'], "created_at": tweet['created_at'], "full_text": tweet['full_text']}
+        return labels
 
 def process_tweet_stream(df):
     db_ready_data_list = []
@@ -86,6 +86,6 @@ def draw_plot(plot_data):
         plt.title("Tweet Count per Cluster Label")
         plt.show()
 
-data = get_data('data_new.csv')
-processed_data = process_tweet_stream(data)
-draw_plot(plot_data)
+# data = get_data('data_new.csv')
+# processed_data = process_tweet_stream(data)
+# draw_plot(plot_data)
